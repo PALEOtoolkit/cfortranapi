@@ -1,0 +1,72 @@
+model1:
+    parameters:
+        model_par1: 0.15
+    domains:
+        ocean:
+
+            reactions:
+                grid:
+                    class: ReactionUnstructuredVectorGrid
+                    parameters:
+                        ncells: 10
+
+                julia_paleo_mock:
+                    class: ReactionPaleoMock
+                    parameters:
+                        par1:          external%model_par1           # double parameter
+                    variable_links:
+                        phy*:      mock_phy*
+
+                julia_paleo_mock2:
+                    class: ReactionPaleoMock
+                    
+                    parameters:
+                        par1:          external%model_par1           # double parameter
+                    variable_links:
+                        scalar_dep:     julia_paleo_mock/scalar_prop
+                        phy*:    mock2_phy*
+
+        oceansurface:
+            reactions:
+
+        oceanfloor:
+            reactions:
+
+# test 2D array
+model_2D:
+    parameters:
+        model_par1: 0.15
+    domains:
+        ocean:
+
+            reactions:
+                grid:
+                    class: ReactionCartesianGrid
+                    parameters:
+                        dimnames: ["lat", "lon"]
+                        dims: [5, 2]
+
+                julia_paleo_mock:
+                    class: ReactionPaleoMock
+                    parameters:
+                        par1:          external%model_par1           # double parameter
+                        phy_2D:     true
+                    variable_links:
+                        phy*:      mock_phy*
+
+                julia_paleo_mock2:
+                    class: ReactionPaleoMock
+                    
+                    parameters:
+                        par1:          external%model_par1           # double parameter
+                    variable_links:
+                        scalar_dep:     julia_paleo_mock/scalar_prop
+                        phy*:    mock2_phy*
+
+        oceansurface:
+            reactions:
+
+        oceanfloor:
+            reactions:
+
+
