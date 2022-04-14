@@ -1,0 +1,6 @@
+Manifest.toml
+LocalPreferences.toml
+*.o
+*.mod
+test_PALEO_C
+test_PALEO_F
