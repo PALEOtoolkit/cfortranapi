@@ -19,8 +19,8 @@ The test programs demonstrate initialising a simple PALEO model (defined in `src
 
 ## C/Fortran API implementation 
 
-The C API uses the Julia @cfunction macro to define C-callable functions (and associated type mapping) in Julia (in `src/PALEO_capi.jl`), following the approach eg of the package by Gunnar Farneback at <https://github.com/GunnarFarneback/DynamicallyLoadedEmbedding.jl>.
+The C API uses the Julia @cfunction macro to define C-callable functions (and associated type mapping) in Julia (in `src/PALEO_capi.jl`), following the approach of the package <https://github.com/GunnarFarneback/DynamicallyLoadedEmbedding.jl>.
     
-This is much simpler than the approach currently (2020-12-20) described in the Julia manual (which does the type mapping in C), although there is an open issue <https://github.com/JuliaLang/julia/issues/38932> and several blog posts advocating this approach, eg by Steven G. Johnson <https://scicomp.stackexchange.com/questions/23194/i-am-searching-for-a-c-code-implementing-the-complex-polygamma-function/23733#23733>,  <https://julialang.org/blog/2013/05/callback/>.
+This is much simpler than the approach currently (2020-12-20) described in the Julia manual (which does the type mapping in C), although there is an open issue <https://github.com/JuliaLang/julia/issues/38932> advocating this approach.
 
 The Fortran API then uses the Fortran 2003 ISO C interoperability calls to provide a standards-based and portable implementation.
