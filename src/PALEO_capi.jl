@@ -24,7 +24,8 @@ import PALEOboxes as PB
 # import Infiltrator # Julia debugger
 
 # temporary for testing: include test module
-include(joinpath(dirname(dirname(pathof(PB))), "test/ReactionPaleoMockModule.jl"))
+# include(joinpath(dirname(dirname(pathof(PB))), "test/ReactionPaleoMockModule.jl"))
+include("ReactionPaleoMockModule.jl")
 
 ################################
 # Define C callable functions 
@@ -98,7 +99,7 @@ const create_modeldata_c = @cfunction(create_modeldata, Cint, ())
 function allocate_variables(hostdep::Cint)::Cint
     ret = C_SUCCESS
     try
-        PB.allocate_variables!(themodel::PB.Model, themodeldata::PB.ModelData, hostdep=Bool(hostdep))
+        PB.allocate_variables!(themodel::PB.Model, themodeldata::PB.ModelData, 1, hostdep=Bool(hostdep))
     catch e
         println("Exception ", e)
         ret = C_FAILURE
@@ -171,7 +172,7 @@ function create_dispatch_methodlists(cellrange_list_c::Ptr{Cvoid})::Ptr{Cvoid}
     cellranges = unsafe_pointer_to_objref(cellrange_list_c)
     try
         # wrap NamedTuple in a Ref as it is immutable hence can't be returned as pointer_from_objref
-        dispatchlists = Ref(PB.create_dispatch_methodlists(themodel::PB.Model, themodeldata::PB.ModelData, cellranges))
+        dispatchlists = Ref(PB.create_dispatch_methodlists(themodel::PB.Model, themodeldata::PB.ModelData, 1, cellranges))
         global refs[dispatchlists] = dispatchlists  # keep a reference to prevent garbage collection
         dispatchlists_c = pointer_from_objref(dispatchlists)
     catch e
@@ -258,7 +259,7 @@ function set_data(variable_c::Ptr{Cvoid}, data_c::Ptr{T}, data_size::Ptr{Cint}, 
 
     ret = C_SUCCESS
     try
-        PB.set_data!(variable, themodeldata::PB.ModelData, data)
+        PB.set_data!(variable, themodeldata::PB.ModelData, 1, data)
     catch e
         println("Exception ", e)
         ret = C_FAILURE

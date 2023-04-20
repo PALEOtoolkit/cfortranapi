@@ -1,4 +1,6 @@
 #include "julia_embedding.h"
+
+#define DEFINE_VARIABLES
 #include "PALEO_cfunctions.h"
 
 int load_paleo_cfunctions()

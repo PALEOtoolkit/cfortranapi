@@ -50,7 +50,6 @@ model_2D:
                     class: ReactionPaleoMock
                     parameters:
                         par1:          external%model_par1           # double parameter
-                        phy_2D:     true
                     variable_links:
                         phy*:      mock_phy*
 
